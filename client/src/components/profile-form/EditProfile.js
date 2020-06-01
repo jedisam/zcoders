@@ -1,10 +1,15 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {createProfile} from '../../actions/profile';
+import {createProfile, getCurrentProfile} from '../../actions/profile';
 
-const CreateProfile = ({createProfile, history}) => {
+const EditProfile = ({
+  profile: {profile, loading},
+  createProfile,
+  getCurrentProfile,
+  history,
+}) => {
   const [formData, setFormData] = useState ({
     company: '',
     website: '',
@@ -37,12 +42,36 @@ const CreateProfile = ({createProfile, history}) => {
 
   const [displatSocialInputs, toggleSocialInputs] = useState (false);
 
+  useEffect (
+    () => {
+      getCurrentProfile ();
+
+      setFormData ({
+        company: loading || !profile.company ? '' : profile.company,
+        website: loading || !profile.website ? '' : profile.website,
+        location: loading || !profile.location ? '' : profile.location,
+        status: loading || !profile.status ? '' : profile.status,
+        skills: loading || !profile.skills ? '' : profile.skills.join (','),
+        githubusername: loading || !profile.githubusername
+          ? ''
+          : profile.githubusername,
+        bio: loading || !profile.bio ? '' : profile.bio,
+        twitter: loading || !profile.twitter ? '' : profile.twitter,
+        facebook: loading || !profile.facebook ? '' : profile.facebook,
+        linkedin: loading || !profile.linkedin ? '' : profile.linkedin,
+        youtube: loading || !profile.youtube ? '' : profile.youtube,
+        instagram: loading || !profile.instagram ? '' : profile.instagram,
+      });
+    },
+    [loading]
+  );
+
   const onChange = e =>
     setFormData ({...formData, [e.target.name]: e.target.value});
 
   const onSubmit = e => {
     e.preventDefault ();
-    createProfile (formData, history);
+    createProfile (formData, history, true);
   };
 
   return (
@@ -77,7 +106,9 @@ const CreateProfile = ({createProfile, history}) => {
             type="text"
             placeholder="Company"
             name="company"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={company}
           />
           <small className="form-text">
@@ -89,7 +120,9 @@ const CreateProfile = ({createProfile, history}) => {
             type="text"
             placeholder="Website"
             name="website"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={website}
           />
           <small className="form-text">
@@ -101,7 +134,9 @@ const CreateProfile = ({createProfile, history}) => {
             type="text"
             placeholder="Location"
             name="location"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={location}
           />
           <small className="form-text">
@@ -113,7 +148,9 @@ const CreateProfile = ({createProfile, history}) => {
             type="text"
             placeholder="* Skills"
             name="skills"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={skills}
           />
           <small className="form-text">
@@ -126,7 +163,9 @@ const CreateProfile = ({createProfile, history}) => {
             type="text"
             placeholder="Github Username"
             name="githubusername"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={githubusername}
           />
           <small className="form-text">
@@ -138,7 +177,9 @@ const CreateProfile = ({createProfile, history}) => {
           <textarea
             placeholder="A short bio of yourself"
             name="bio"
-            onChange={e => {onChange(e)}}
+            onChange={e => {
+              onChange (e);
+            }}
             value={bio}
           />
           <small className="form-text">Tell us a little about yourself</small>
@@ -163,7 +204,9 @@ const CreateProfile = ({createProfile, history}) => {
                 type="text"
                 placeholder="Twitter URL"
                 name="twitter"
-                onChange={e => {onChange(e)}}
+                onChange={e => {
+                  onChange (e);
+                }}
                 value={twitter}
               />
             </div>
@@ -174,7 +217,9 @@ const CreateProfile = ({createProfile, history}) => {
                 type="text"
                 placeholder="Facebook URL"
                 name="facebook"
-                onChange={e => {onChange(e)}}
+                onChange={e => {
+                  onChange (e);
+                }}
                 value={facebook}
               />
             </div>
@@ -185,7 +230,9 @@ const CreateProfile = ({createProfile, history}) => {
                 type="text"
                 placeholder="YouTube URL"
                 name="youtube"
-                onChange={e => {onChange(e)}}
+                onChange={e => {
+                  onChange (e);
+                }}
                 value={youtube}
               />
             </div>
@@ -196,7 +243,9 @@ const CreateProfile = ({createProfile, history}) => {
                 type="text"
                 placeholder="Linkedin URL"
                 name="linkedin"
-                onChange={e => {onChange(e)}}
+                onChange={e => {
+                  onChange (e);
+                }}
                 value={linkedin}
               />
             </div>
@@ -207,7 +256,9 @@ const CreateProfile = ({createProfile, history}) => {
                 type="text"
                 placeholder="Instagram URL"
                 name="instagram"
-                onChange={e => {onChange(e)}}
+                onChange={e => {
+                  onChange (e);
+                }}
                 value={instagram}
               />
             </div>
@@ -220,8 +271,16 @@ const CreateProfile = ({createProfile, history}) => {
   );
 };
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
 };
 
-export default connect (null, {createProfile}) (withRouter (CreateProfile));
+const mapStateToProps = state => ({
+  profile: state.profile,
+});
+
+export default connect (mapStateToProps, {createProfile, getCurrentProfile}) (
+  withRouter (EditProfile)
+);
