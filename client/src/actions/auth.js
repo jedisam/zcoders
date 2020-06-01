@@ -8,6 +8,7 @@ import {
   USER_LOADED,
   AUTH_ERROR,
   LOGOUT,
+  CLEAR_PROFILES,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -91,7 +92,7 @@ export const login = ({email, password}) => async dispatch => {
 
     dispatch (loadUser ());
   } catch (err) {
-    const errors = err.response.data.errors;
+    const errors = err;
     if (errors) {
       errors.forEach (err => dispatch (setAlert (err.msg, 'danger')));
     }
@@ -106,5 +107,8 @@ export const login = ({email, password}) => async dispatch => {
 export const logout = () => dispatch => {
   dispatch ({
     type: LOGOUT,
+  });
+  dispatch ({
+    type: CLEAR_PROFILES,
   });
 };
