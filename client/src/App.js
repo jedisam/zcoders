@@ -10,6 +10,7 @@ import EditProfile from './components/profile-form/EditProfile';
 import AddExperience from './components/profile-form/AddExperience';
 import AddEducation from './components/profile-form/AddEducation';
 import PrivateRoute from './components/routing/PrivateRoute';
+import Profiles from './components/profiles/Profiles';
 import Alert from './components/layout/Alert';
 import setAuthToken from './utils/setAuthToken';
 import {loadUser} from './actions/auth';
@@ -59,6 +60,7 @@ const App = () => {
               path="/add-education"
               component={AddEducation}
             />
+            <Route exact path="/profiles" component={Profiles} />
             </Switch>
           </section>
         </Fragment>
