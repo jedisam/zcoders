@@ -147,7 +147,7 @@ router.get ('/user/:user_id', async (req, res) => {
 router.delete ('/', auth, async (req, res) => {
   try {
     // remove users posts
-    await Post.deleteMany ({user: req.user});
+    await Post.deleteMany ({user: req.user.id});
 
     // remove profile
     await Profile.findOneAndRemove ({user: req.user.id});
@@ -157,7 +157,7 @@ router.delete ('/', auth, async (req, res) => {
     return res.json ({msg: 'User deleted!'});
   } catch (err) {
     console.error (err.message);
-    return res.status (500).json ('Server Error');
+    res.status (500).send ('Server Error!');
   }
 });
 

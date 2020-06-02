@@ -12,6 +12,7 @@ const Dashboard = ({
   getCurrentProfile,
   auth: {user},
   profile: {profile, loading},
+  deleteAccount
 }) => {
   useEffect (() => {
     getCurrentProfile ();
@@ -30,7 +31,10 @@ const Dashboard = ({
               <Experience experience={profile.experience} />
               <Education education={profile.education} />
               <div className="my-2">
-                <button className="btn btn-danger" onClick={deleteAccount ()}>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deleteAccount ()}
+                >
                   <i className="fas fa-user-minus" />
                   Delete My Account
                 </button>
