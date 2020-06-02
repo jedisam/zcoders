@@ -4,7 +4,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
-import {getCurrentProfile} from '../../actions/profile';
+import Education from './Education';
+import {getCurrentProfile, deleteAccount} from '../../actions/profile';
 import Spinner from '../layout/Spinner';
 
 const Dashboard = ({
@@ -25,8 +26,15 @@ const Dashboard = ({
         </p>
         {profile !== null
           ? <Fragment>
-            <DashboardActions />
-            <Experience experience = {profile.experience}/>
+              <DashboardActions />
+              <Experience experience={profile.experience} />
+              <Education education={profile.education} />
+              <div className="my-2">
+                <button className="btn btn-danger" onClick={deleteAccount ()}>
+                  <i className="fas fa-user-minus" />
+                  Delete My Account
+                </button>
+              </div>
             </Fragment>
           : <Fragment>
               <p>You have not Yet setup a profile, please add some info</p>
@@ -41,6 +49,7 @@ Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -48,4 +57,6 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect (mapStateToProps, {getCurrentProfile}) (Dashboard);
+export default connect (mapStateToProps, {getCurrentProfile, deleteAccount}) (
+  Dashboard
+);
