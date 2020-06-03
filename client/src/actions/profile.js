@@ -13,7 +13,6 @@ import {
 
 // get current user profile
 export const getCurrentProfile = () => async dispatch => {
-
   try {
     const res = await axios.get ('http://localhost:5000/api/profile/me');
 
@@ -32,7 +31,6 @@ export const getCurrentProfile = () => async dispatch => {
 // Get all user profile
 
 export const getProfiles = () => async dispatch => {
-  
   dispatch ({
     type: CLEAR_PROFILES,
   });
@@ -56,7 +54,9 @@ export const getProfiles = () => async dispatch => {
 
 export const getProfileById = userId => async dispatch => {
   try {
-    const res = await axios.get (`http://localhost:5000/api/profile/user/${userId}`);
+    const res = await axios.get (
+      `http://localhost:5000/api/profile/user/${userId}`
+    );
 
     dispatch ({
       type: GET_PROFILE,
@@ -73,14 +73,15 @@ export const getProfileById = userId => async dispatch => {
 // Get Github repos
 
 export const getGithubRepos = username => async dispatch => {
-  
   try {
-    const res = await axios.get (`http://localhost:5000/api/profile/github/${username}`);
+    const res = await axios.get (
+      `http://localhost:5000/api/profile/github/${username}`
+    );
 
     dispatch ({
       type: GET_REPOS,
       payload: res.data,
-    }); 
+    });
   } catch (err) {
     dispatch ({
       type: PROFILE_ERROR,
@@ -88,7 +89,6 @@ export const getGithubRepos = username => async dispatch => {
     });
   }
 };
-
 
 // create or update a profile
 
@@ -248,7 +248,7 @@ export const deleteEducation = id => async dispatch => {
 export const deleteAccount = () => async dispatch => {
   if (window.confirm ('Are you sure? This can NOT be undone!')) {
     try {
-       await axios.delete ('http://localhost:5000/api/profile');
+      await axios.delete ('http://localhost:5000/api/profile');
       dispatch ({
         type: CLEAR_PROFILES,
       });

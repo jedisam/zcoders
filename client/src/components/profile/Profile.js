@@ -8,7 +8,7 @@ import ProfileTop from './ProfileTop.js'
 import ProfileAbout from './ProfileAbout.js'
 import ProfileExperience from './ProfileExperience.js'
 import ProfileEducation from './ProfileEducation.js'
-import Experience from '../dashboard/Experience';
+import ProfileGithub from './ProfileGithub.js'
 
 const Profile = ({
   getProfileById,
@@ -47,6 +47,10 @@ const Profile = ({
                 ))}
               </Fragment>) : (<h4>No Education Credentials</h4>)} 
             </div>
+
+            {profile.githubusername && (
+              <ProfileGithub  username = {profile.githubusername} />
+            )}
 
           </div>
           
