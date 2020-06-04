@@ -2,7 +2,8 @@ import {
     GET_POSTS,
     POST_ERROR,
     UPDATE_LIKES,
-    DELETE_POSTS
+    DELETE_POSTS,
+    ADD_POST
 } from '../actions/types'
 
 
@@ -21,6 +22,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 posts: payload,
+                isLoading: false
+            }
+        case ADD_POST:
+            return {
+                ...state,
+                posts: [payload, ...state.posts ],
                 isLoading: false
             }
         case DELETE_POSTS:
