@@ -1,6 +1,7 @@
 import {
     GET_POSTS,
-    POST_ERROR
+    POST_ERROR,
+    UPDATE_LIKES
 } from '../actions/types'
 
 
@@ -26,6 +27,12 @@ export default (state = initialState, action) => {
                 ...state,
                 error: payload,
                 isLoading: false
+            }
+        case UPDATE_LIKES: 
+            return{
+                ...state,
+                posts: state.posts.map(post => post._id === payload.postId ? {...post, likes:payload.likes} : post),
+                isLoading: false 
             }
         default:
             return {
