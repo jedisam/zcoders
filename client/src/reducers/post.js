@@ -1,7 +1,8 @@
 import {
     GET_POSTS,
     POST_ERROR,
-    UPDATE_LIKES
+    UPDATE_LIKES,
+    DELETE_POSTS
 } from '../actions/types'
 
 
@@ -20,6 +21,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 posts: payload,
+                isLoading: false
+            }
+        case DELETE_POSTS:
+            return {
+                ...state,
+                posts: state.posts.filter(post => post._id !== payload),
                 isLoading: false
             }
         case POST_ERROR:
