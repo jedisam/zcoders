@@ -70,9 +70,7 @@ export const removeLike = postId => async dispatch => {
 
 export const deletePost = postId => async dispatch => {
   try {
-    await axios.delete (
-      `http://localhost:5000/api/posts/${postId}`
-    );
+    await axios.delete (`http://localhost:5000/api/posts/${postId}`);
     dispatch ({
       type: DELETE_POSTS,
       payload: postId,
@@ -118,7 +116,6 @@ export const addPost = formData => async dispatch => {
 export const getPost = id => async dispatch => {
   try {
     const res = await axios.get (`http://localhost:5000/api/posts/${id}`);
-    alert (JSON.stringify (res.data[0]));
     dispatch ({
       type: GET_POST,
       payload: res.data[0],
