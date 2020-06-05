@@ -62,7 +62,6 @@ router.get("/", auth, async (req, res) => {
 // @access private
 
 router.get("/:user_id", auth, async (req, res) => {
-  console.log("Hittt");
   try {
     const post = await Post.find({ _id: req.params.user_id });
     if (!post) {

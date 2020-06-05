@@ -17,13 +17,17 @@ const Post = ({getPost, post: {post, isLoading}, match}) => {
     ? <Spinner />
     : <Fragment>
         <Link to="/posts" className="btn">Back To Posts</Link>
-        {post.map (post => (
-          <PostItem key={post._id} post={post} showActions={false} />
-        ))}
-        {post.map (post => <CommentForm key={post._id} postId={post._id} />)}
-        <div className="comments">post.comments.map(comment => (
-          <CommentItem key={Comment._id} Comment ={Comment} postId = {post._id} />
-        ))</div>
+        <PostItem post={post} showActions={false} />
+        <CommentForm postId={post._id} />
+        <div className="comments">
+          {post.comments.map (comment => (
+            <CommentItem
+              key={comment._id}
+              comment={comment}
+              postId={post._id}
+            />
+          ))}
+        </div>
       </Fragment>;
 };
 

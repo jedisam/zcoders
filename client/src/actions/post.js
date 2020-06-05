@@ -70,7 +70,7 @@ export const removeLike = postId => async dispatch => {
 
 export const deletePost = postId => async dispatch => {
   try {
-    const res = await axios.delete (
+    await axios.delete (
       `http://localhost:5000/api/posts/${postId}`
     );
     dispatch ({
@@ -118,9 +118,10 @@ export const addPost = formData => async dispatch => {
 export const getPost = id => async dispatch => {
   try {
     const res = await axios.get (`http://localhost:5000/api/posts/${id}`);
+    alert (JSON.stringify (res.data[0]));
     dispatch ({
       type: GET_POST,
-      payload: res.data,
+      payload: res.data[0],
     });
   } catch (err) {
     dispatch ({
@@ -148,7 +149,7 @@ export const addComment = (postID, formData) => async dispatch => {
       type: ADD_COMMENT,
       payload: res.data,
     });
-     dispatch (setAlert ('Post Created!', 'success'));
+    dispatch (setAlert ('Post Created!', 'success'));
   } catch (err) {
     dispatch ({
       type: POST_ERROR,
@@ -157,11 +158,11 @@ export const addComment = (postID, formData) => async dispatch => {
   }
 };
 
-//  DElete Comment
+//  Delete Comment
 
 export const deleteComment = (postID, commentId) => async dispatch => {
   try {
-    const res = await axios.delete (
+    await axios.delete (
       `http://localhost:5000/api/posts/comment/${postID}/${commentId}`
     );
     dispatch ({
